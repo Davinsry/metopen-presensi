@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Karyawan {
+  id        Int        @id @default(autoincrement())
+  nip       String     @unique
+  nama      String
+  jabatan   String
+  createdAt DateTime   @default(now())
+  absensi   Absensi[]
+}
+
+model QRToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  createdAt DateTime @default(now())
+  expiredAt DateTime
+  isUsed    Boolean  @default(false)
+}
+
+model Absensi {
+  id          Int      @id @default(autoincrement())
+  karyawanId  Int
+  karyawan    Karyawan @relation(fields: [karyawanId], references: [id])
+  timestamp   DateTime @default(now())
+  latitude    Float
+  longitude   Float
+  foto        String   // base64 string foto selfie
+  qrToken     String
+  status      String   @default("HADIR") // HADIR / TERLAMBAT / DITOLAK
+}
