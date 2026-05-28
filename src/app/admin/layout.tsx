@@ -39,30 +39,41 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="flex-1 flex flex-col md:flex-row min-h-screen bg-[#070b13] text-slate-100">
-      {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-slate-950/80 border-b md:border-b-0 md:border-r border-slate-800/60 p-6 flex flex-col shrink-0">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-lg text-indigo-400">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-            </svg>
+      {/* Sidebar / Top Navigation for Mobile */}
+      <aside className="w-full md:w-64 bg-slate-950/80 border-b md:border-b-0 md:border-r border-slate-800/60 p-4 sm:p-6 flex flex-col shrink-0">
+        <div className="flex items-center justify-between md:justify-start gap-3 mb-4 md:mb-8">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-lg text-indigo-400">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 md:w-6 md:h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-sm md:text-lg font-bold bg-gradient-to-r from-indigo-200 to-indigo-400 bg-clip-text text-transparent">
+                PresensiKu Admin
+              </h1>
+              <span className="text-[10px] md:text-xs text-slate-500 hidden sm:inline md:block">Panel Administrator</span>
+            </div>
           </div>
-          <div>
-            <h1 className="text-lg font-bold bg-gradient-to-r from-indigo-200 to-indigo-400 bg-clip-text text-transparent">
-              PresensiKu Admin
-            </h1>
-            <span className="text-xs text-slate-500">Panel Administrator</span>
-          </div>
+
+          {/* Quick exit link on mobile */}
+          <Link
+            href="/"
+            className="md:hidden text-xs font-semibold text-slate-500 hover:text-slate-300 flex items-center gap-1"
+          >
+            Keluar
+          </Link>
         </div>
 
-        <nav className="space-y-1.5 flex-1">
+        {/* Scrollable horizontal list on mobile, vertical sidebar list on desktop */}
+        <nav className="flex md:flex-col overflow-x-auto md:overflow-x-visible gap-2 md:gap-1.5 pb-2 md:pb-0 scrollbar-none flex-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                className={`flex items-center gap-2 md:gap-3 px-3 py-2 md:px-4 md:py-3 rounded-xl text-xs md:text-sm font-medium transition-all shrink-0 ${
                   isActive
                     ? "bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 shadow-[0_0_15px_-3px_rgba(99,102,241,0.2)]"
                     : "text-slate-400 hover:bg-slate-900/60 hover:text-slate-200 border border-transparent"
@@ -75,8 +86,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
-        {/* Back to main portal link */}
-        <div className="mt-auto pt-6 border-t border-slate-900">
+        {/* Back to main portal link - Hidden on Mobile sidebar, replaced by top right link */}
+        <div className="hidden md:block mt-auto pt-6 border-t border-slate-900">
           <Link
             href="/"
             className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-500 hover:text-slate-300 transition-colors"

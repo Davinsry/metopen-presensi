@@ -40,3 +40,24 @@ body {
 .glow-rose {
   box-shadow: 0 0 50px -12px rgba(244, 63, 94, 0.25);
 }
+
+/* Custom styling for html5-qrcode library elements */
+#qr-reader {
+  border: none !important;
+}
+
+#qr-reader video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 12px;
+}
+
+/* Hide scrollbar utility for mobile navigation */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

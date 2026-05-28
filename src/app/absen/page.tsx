@@ -253,9 +253,20 @@ export default function AbsenKaryawan() {
         videoRef.current.srcObject = stream;
       }
     } catch (err) {
-      console.error("Selfie camera error:", err);
-      setCameraError("Gagal mengakses kamera depan untuk selfie. Pastikan izin kamera aktif.");
-      setCameraActive(false);
+      console.warn("First camera constraints failed, trying fallback...", err);
+      try {
+        const fallbackStream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
+        mediaStreamRef.current = fallbackStream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = fallbackStream;
+        }
+      } catch (fallbackErr) {
+        console.error("Selfie camera error:", fallbackErr);
+        setCameraError("Gagal mengakses kamera depan untuk selfie. Pastikan izin kamera aktif.");
+        setCameraActive(false);
+      }
     }
   }
 
